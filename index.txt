@@ -1,0 +1,114 @@
+project RKDocs/common/                          (*** NO BRANCH ***)
+ --     GMAC/liw@112.74.190.55
+project build/make/                             (*** NO BRANCH ***)
+ -m     target/product/full_base.mk
+project device/rockchip/common/                 (*** NO BRANCH ***)
+ -m     init.rk30board.rc
+ -m     init.rockchip.rc
+project device/rockchip/rk3288/                 (*** NO BRANCH ***)
+ -m     device.mk
+ -m     fstab.rk30board
+ --     init.evideo.rc
+ --     parameter-1.txt
+ -m     recovery.fstab
+ -m     rk3288.mk
+project frameworks/base/                        (*** NO BRANCH ***)
+ -m     packages/SettingsProvider/res/values/defaults.xml
+ -m     packages/SystemUI/res/values/config.xml
+ -m     packages/SystemUI/src/com/android/systemui/keyguard/KeyguardViewMediator.java
+ -m     services/core/java/com/android/server/notification/NotificationManagerService.java
+ -m     services/core/java/com/android/server/power/PowerManagerService.java
+project hardware/rockchip/audio/                (*** NO BRANCH ***)
+ -m     tinyalsa_hal/codec_config/es8316_config.h
+project hardware/rockchip/libgralloc/           (*** NO BRANCH ***)
+ -m     Android.mk
+project hardware/rockchip/librga/               (*** NO BRANCH ***)
+ --     version.h
+project hardware/rockchip/omx_il/               (*** NO BRANCH ***)
+ -m     include/rockchip/git_info.h
+project kernel/                                 (*** NO BRANCH ***)
+ -m     arch/arm/boot/dts/Makefile
+ --     arch/arm/boot/dts/evideo-rg_ivc107.dts
+ -m     arch/arm/boot/dts/rk3288-android.dtsi
+ -m     arch/arm/boot/dts/rk3288-evb-android-rk808-edp.dts
+ --     arch/arm/boot/dts/rk3288-evb-android-rk808-edp.dts_bak
+ -m     arch/arm/boot/dts/rk3288-evb-android-rk818-mipi.dts
+ -m     arch/arm/boot/dts/rk3288-evb.dtsi
+ --     arch/arm/configs/evideo_defconfig
+ -m     arch/arm/configs/rockchip_defconfig
+ -m     drivers/gpu/drm/panel/panel-simple.c
+ -m     drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
+ -m     drivers/gpu/drm/rockchip/dw-mipi-dsi.c
+ -m     drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+ -m     drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+ -m     drivers/regulator/core.c
+ -m     drivers/video/backlight/pwm_bl.c
+ -m     sound/soc/codecs/es8316.c
+ --     tests/
+ --     zboot.img
+project system/core/                            (*** NO BRANCH ***)
+ -m     init/init.cpp
+project u-boot/                                 (*** NO BRANCH ***)
+ -m     drivers/video/rockchip-dw-mipi-dsi.c
+project vendor/rockchip/common/                 (*** NO BRANCH ***)
+ --     apps/EvRKUpdateService/Android.mk
+ --     apps/EvRKUpdateService/AndroidManifest.xml
+ --     apps/EvRKUpdateService/jni/Android.mk
+ --     apps/EvRKUpdateService/jni/android_rockchip_update_UpdateService.cpp
+ --     apps/EvRKUpdateService/libs/ftp4j-1.7.2.jar
+ --     apps/EvRKUpdateService/libs/org.apache.http.legacy.jar
+ --     apps/EvRKUpdateService/proguard.cfg
+ --     apps/EvRKUpdateService/res/drawable-hdpi/icon.png
+ --     apps/EvRKUpdateService/res/drawable-hdpi/ota_pause.png
+ --     apps/EvRKUpdateService/res/drawable-hdpi/ota_update.png
+ --     apps/EvRKUpdateService/res/drawable-hdpi/setting_bg.jpg
+ --     apps/EvRKUpdateService/res/drawable-hdpi/setting_check.9.png
+ --     apps/EvRKUpdateService/res/drawable-hdpi/setting_check_icon.png
+ --     apps/EvRKUpdateService/res/drawable-hdpi/setting_icon.png
+ --     apps/EvRKUpdateService/res/drawable-hdpi/setting_line.png
+ --     apps/EvRKUpdateService/res/drawable-hdpi/setting_line_top.png
+ --     apps/EvRKUpdateService/res/drawable-hdpi/setting_top_bg.9.png
+ --     apps/EvRKUpdateService/res/drawable-ldpi/ic_dialog_alert.png
+ --     apps/EvRKUpdateService/res/drawable-ldpi/icon.png
+ --     apps/EvRKUpdateService/res/drawable-ldpi/ota_pause.png
+ --     apps/EvRKUpdateService/res/drawable-ldpi/ota_update.png
+ --     apps/EvRKUpdateService/res/drawable-mdpi/ic_dialog_alert.png
+ --     apps/EvRKUpdateService/res/drawable-mdpi/icon.png
+ --     apps/EvRKUpdateService/res/drawable-mdpi/ota_pause.png
+ --     apps/EvRKUpdateService/res/drawable-mdpi/ota_update.png
+ --     apps/EvRKUpdateService/res/drawable-mdpi/setting_bg.jpg
+ --     apps/EvRKUpdateService/res/drawable-mdpi/setting_check.9.png
+ --     apps/EvRKUpdateService/res/drawable-mdpi/setting_check_icon.png
+ --     apps/EvRKUpdateService/res/drawable-mdpi/setting_icon.png
+ --     apps/EvRKUpdateService/res/drawable-mdpi/setting_line.png
+ --     apps/EvRKUpdateService/res/drawable-mdpi/setting_line_top.png
+ --     apps/EvRKUpdateService/res/drawable-mdpi/setting_top_bg.9.png
+ --     apps/EvRKUpdateService/res/layout/download_notify.xml
+ --     apps/EvRKUpdateService/res/layout/notify_dialog.xml
+ --     apps/EvRKUpdateService/res/layout/package_download.xml
+ --     apps/EvRKUpdateService/res/layout/setting.xml
+ --     apps/EvRKUpdateService/res/values-es-rES/strings.xml
+ --     apps/EvRKUpdateService/res/values-in-rID/strings.xml
+ --     apps/EvRKUpdateService/res/values-zh-rCN/strings.xml
+ --     apps/EvRKUpdateService/res/values-zh-rTW/strings.xml
+ --     apps/EvRKUpdateService/res/values/strings.xml
+ --     apps/EvRKUpdateService/src/android/rockchip/update/service/CustomerHttpClient.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/service/FTPFileDownloadTask.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/service/FirmwareUpdatingActivity.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/service/HTTPFileDownloadTask.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/service/NotifyDeleteActivity.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/service/OtaUpdateNotifyActivity.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/service/PackageDownloadActivity.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/service/RKRecoverySystem.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/service/RKUpdateReceiver.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/service/RKUpdateService.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/service/Setting.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/service/UpdateAndRebootActivity.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/util/FTPOptType.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/util/FTPRequestInfo.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/util/FTPToolkit.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/util/FileInfo.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/util/PathToolkit.java
+ --     apps/EvRKUpdateService/src/android/rockchip/update/util/RegetInfoUtil.java
+ -m     apps/apps.mk
+ --     etc/bootanimation.zip
