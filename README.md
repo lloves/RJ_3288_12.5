@@ -1,0 +1,2 @@
+# RJ_3288_12.5
+RK3288 PAD RuiJie
