@@ -1,0 +1,118 @@
+diff --git a/packages/SettingsProvider/res/values/defaults.xml b/packages/SettingsProvider/res/values/defaults.xml
+index 1b7e3ac6952..54e50fd2e8b 100644
+--- a/packages/SettingsProvider/res/values/defaults.xml
++++ b/packages/SettingsProvider/res/values/defaults.xml
+@@ -18,7 +18,7 @@
+ -->
+ <resources>
+     <bool name="def_dim_screen">true</bool>
+-    <integer name="def_screen_off_timeout">60000</integer>
++    <integer name="def_screen_off_timeout">2147483646</integer>
+     <integer name="def_sleep_timeout">-1</integer>
+     <bool name="def_airplane_mode_on">false</bool>
+     <bool name="def_theater_mode_on">false</bool>
+@@ -30,7 +30,7 @@
+     <bool name="def_auto_time_zone">true</bool>
+     <bool name="def_accelerometer_rotation">true</bool>
+     <!-- Default screen brightness, from 0 to 255.  102 is 40%. -->
+-    <integer name="def_screen_brightness">102</integer>
++    <integer name="def_screen_brightness">99</integer>
+     <bool name="def_screen_brightness_automatic_mode">false</bool>
+     <fraction name="def_window_animation_scale">100%</fraction>
+     <fraction name="def_window_transition_scale">100%</fraction>
+@@ -81,7 +81,7 @@
+     <string name="def_trusted_sound" translatable="false">/system/media/audio/ui/Trusted.ogg</string>
+     <string name="def_wireless_charging_started_sound" translatable="false">/system/media/audio/ui/WirelessChargingStarted.ogg</string>
+ 
+-    <bool name="def_lockscreen_disabled">false</bool>
++    <bool name="def_lockscreen_disabled">true</bool>
+     <bool name="def_device_provisioned">false</bool>
+     <integer name="def_dock_audio_media_enabled">1</integer>
+ 
+diff --git a/packages/SystemUI/res/values/config.xml b/packages/SystemUI/res/values/config.xml
+index 8511fed05c9..04f882ea79b 100644
+--- a/packages/SystemUI/res/values/config.xml
++++ b/packages/SystemUI/res/values/config.xml
+@@ -197,7 +197,7 @@
+     <item name="recents_layout_unfocused_range_max" format="float" type="integer">2.5</item>
+ 
+     <!-- Whether to enable KeyguardService or not -->
+-    <bool name="config_enableKeyguardService">true</bool>
++    <bool name="config_enableKeyguardService">false</bool>
+ 
+     <!-- The maximum count of notifications on Keyguard. The rest will be collapsed in an overflow
+      card. -->
+diff --git a/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardViewMediator.java b/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardViewMediator.java
+index 28adca97b8b..f41b0541edd 100644
+--- a/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardViewMediator.java
++++ b/packages/SystemUI/src/com/android/systemui/keyguard/KeyguardViewMediator.java
+@@ -227,7 +227,7 @@ public class KeyguardViewMediator extends SystemUI {
+     /**
+      * External apps (like the phone app) can tell us to disable the keygaurd.
+      */
+-    private boolean mExternallyEnabled = true;
++    private boolean mExternallyEnabled = false;
+ 
+     /**
+      * Remember if an external call to {@link #setKeyguardEnabled} with value
+diff --git a/services/core/java/com/android/server/notification/NotificationManagerService.java b/services/core/java/com/android/server/notification/NotificationManagerService.java
+index d82ccad160d..2b1ef0afa8a 100644
+--- a/services/core/java/com/android/server/notification/NotificationManagerService.java
++++ b/services/core/java/com/android/server/notification/NotificationManagerService.java
+@@ -3166,7 +3166,9 @@ public class NotificationManagerService extends SystemService {
+         }
+         if (summaryRecord != null && checkDisqualifyingFeatures(userId, MY_UID,
+                 summaryRecord.sbn.getId(), summaryRecord.sbn.getTag(), summaryRecord, true)) {
+-            mHandler.post(new EnqueueNotificationRunnable(userId, summaryRecord));
++
++            // Modify by liw. System notification forbid.
++            // mHandler.post(new EnqueueNotificationRunnable(userId, summaryRecord));
+         }
+     }
+ 
+@@ -3557,7 +3559,8 @@ public class NotificationManagerService extends SystemService {
+             }
+         }
+ 
+-        mHandler.post(new EnqueueNotificationRunnable(userId, r));
++        // Modify by liw. System notification forbid.
++        // mHandler.post(new EnqueueNotificationRunnable(userId, r));
+     }
+ 
+     private void doChannelWarningToast(CharSequence toastText) {
+diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
+index fae136b516a..bc0ec8da081 100644
+--- a/services/core/java/com/android/server/power/PowerManagerService.java
++++ b/services/core/java/com/android/server/power/PowerManagerService.java
+@@ -4427,11 +4427,12 @@ public final class PowerManagerService extends SystemService
+          */
+         @Override // Binder call
+         public void reboot(boolean confirm, String reason, boolean wait) {
++            /*
+             mContext.enforceCallingOrSelfPermission(android.Manifest.permission.REBOOT, null);
+             if (PowerManager.REBOOT_RECOVERY.equals(reason)
+                     || PowerManager.REBOOT_RECOVERY_UPDATE.equals(reason)) {
+                 mContext.enforceCallingOrSelfPermission(android.Manifest.permission.RECOVERY, null);
+-            }
++            }*/
+ 
+             final long ident = Binder.clearCallingIdentity();
+             try {
+@@ -4449,7 +4450,7 @@ public final class PowerManagerService extends SystemService
+          */
+         @Override // Binder call
+         public void rebootSafeMode(boolean confirm, boolean wait) {
+-            mContext.enforceCallingOrSelfPermission(android.Manifest.permission.REBOOT, null);
++            // mContext.enforceCallingOrSelfPermission(android.Manifest.permission.REBOOT, null);
+ 
+             final long ident = Binder.clearCallingIdentity();
+             try {
+@@ -4468,7 +4469,7 @@ public final class PowerManagerService extends SystemService
+          */
+         @Override // Binder call
+         public void shutdown(boolean confirm, String reason, boolean wait) {
+-            mContext.enforceCallingOrSelfPermission(android.Manifest.permission.REBOOT, null);
++            // mContext.enforceCallingOrSelfPermission(android.Manifest.permission.REBOOT, null);
+ 
+             final long ident = Binder.clearCallingIdentity();
+             try {

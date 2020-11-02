@@ -1,0 +1,27 @@
+diff --git a/init.rk30board.rc b/init.rk30board.rc
+index 53e14f1..9f3a573 100755
+--- a/init.rk30board.rc
++++ b/init.rk30board.rc
+@@ -6,6 +6,7 @@ import init.${ro.board.platform}.rc
+ import init.${ro.target.product}.rc
+ import init.car.rc
+ import init.optee.rc
++import init.evideo.rc
+ 
+ on post-fs
+     restorecon_recursive /metadata
+diff --git a/init.rockchip.rc b/init.rockchip.rc
+index 719b35f..355c644 100755
+--- a/init.rockchip.rc
++++ b/init.rockchip.rc
+@@ -73,6 +73,10 @@ service watchdogd /sbin/watchdogd 10 20
+     disabled
+     seclabel u:r:watchdogd:s0
+ 
++# virtual sdcard daemon running as media_rw (1023)
++service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
++    class late_start
++
+ 
+ # bugreport is triggered by holding down volume down, volume up and power
+ service bugreport /system/bin/dumpstate -d -p -B -z \

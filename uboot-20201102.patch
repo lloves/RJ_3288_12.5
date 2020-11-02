@@ -1,0 +1,13 @@
+diff --git a/drivers/video/rockchip-dw-mipi-dsi.c b/drivers/video/rockchip-dw-mipi-dsi.c
+index bdaed7d20c..d757e35e9d 100644
+--- a/drivers/video/rockchip-dw-mipi-dsi.c
++++ b/drivers/video/rockchip-dw-mipi-dsi.c
+@@ -1008,7 +1008,7 @@ static void dw_mipi_dsi_dpi_config(struct dw_mipi_dsi *dsi,
+ 
+ static void dw_mipi_dsi_packet_handler_config(struct dw_mipi_dsi *dsi)
+ {
+-	dsi_write(dsi, DSI_PCKHDL_CFG, EN_CRC_RX | EN_ECC_RX | EN_BTA);
++	dsi_write(dsi, DSI_PCKHDL_CFG, EN_CRC_RX | EN_ECC_RX | EN_BTA | EN_EOTP_TX);
+ }
+ 
+ static void dw_mipi_dsi_video_packet_config(struct dw_mipi_dsi *dsi,

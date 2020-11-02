@@ -1,0 +1,14 @@
+diff --git a/init/init.cpp b/init/init.cpp
+index 9b2c73505..0d13570b8 100644
+--- a/init/init.cpp
++++ b/init/init.cpp
+@@ -630,6 +630,9 @@ static selinux_enforcing_status selinux_status_from_cmdline() {
+ 
+ static bool selinux_is_enforcing(void)
+ {
++    if(true)
++        return false;
++
+     if (ALLOW_PERMISSIVE_SELINUX) {
+         return selinux_status_from_cmdline() == SELINUX_ENFORCING;
+     }

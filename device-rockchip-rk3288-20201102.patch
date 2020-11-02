@@ -1,0 +1,101 @@
+diff --git a/device.mk b/device.mk
+index 64f3ff2..006d7d6 100644
+--- a/device.mk
++++ b/device.mk
+@@ -43,6 +43,9 @@ PRODUCT_COPY_FILES += \
+ PRODUCT_COPY_FILES += \
+ 	frameworks/native/data/etc/android.hardware.opengles.aep.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.opengles.aep.xml
+ 
++PRODUCT_COPY_FILES += \
++	vendor/rockchip/common/etc/bootanimation.zip:/system/media/bootanimation.zip
++
+ # update realtek bluetooth configs
+ PRODUCT_COPY_FILES += \
+ 	$(LOCAL_PATH)/bluetooth/rtkbt.conf:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth/rtkbt.conf
+@@ -103,4 +106,27 @@ PRODUCT_PROPERTY_OVERRIDES += \
+                 ro.build.shutdown_timeout=0 \
+                 persist.enable_task_snapshots=false \
+                 ro.adb.secure=0 \
+-                ro.rk.displayd.enable=false
++                ro.rk.displayd.enable=false \
++		sys.hwc.device.primary=DSI \
++		ro.product.locale.language=zh
++		ro.product.locale.region=CN
++
++# 四方定制平板
++
++# 系统app
++PRODUCT_PACKAGES += \
++    EsFile \
++    SFLauncher \
++    EvSettings \
++    evideo_init \
++    evideo_reboot
++
++# 系统默认语言
++PRODUCT_LOCALES := \
++    zh_CN \
++    en_US
++
++# 系统资源copy
++PRODUCT_COPY_FILES += \
++    $(LOCAL_PATH)/init.evideo.rc:root/init.evideo.rc \
++    vendor/evideo/RG-IVC107/etc/init.evideo.sh:/system/bin/init.evideo.sh
+diff --git a/fstab.rk30board b/fstab.rk30board
+index 038a593..75ca4a3 100755
+--- a/fstab.rk30board
++++ b/fstab.rk30board
+@@ -3,7 +3,7 @@
+ # The filesystem that contains the filesystem checker binary (typically /system) cannot
+ # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+ 
+-/dev/block/by-name/oem            /oem                ext4      ro,noatime,nodiratime,noauto_da_alloc                                  wait,check
++# /dev/block/by-name/oem            /oem                ext4      ro,noatime,nodiratime,noauto_da_alloc                                  wait,check
+ /dev/block/by-name/cache          /cache              ext4      noatime,nodiratime,nosuid,nodev,noauto_da_alloc,discard                wait,check
+ /dev/block/by-name/metadata       /metadata           ext4      noatime,nodiratime,nosuid,nodev,noauto_da_alloc,discard                wait
+ /dev/block/by-name/misc         /misc               emmc      defaults     defaults
+@@ -14,4 +14,5 @@
+ # For sdmmc
+ /devices/platform/ff0c0000.dwmmc/mmc_host*        auto  auto    defaults        voldmanaged=sdcard1:auto
+ # 3288 default opening data-encrypt.
+-/dev/block/by-name/userdata       /data               f2fs      noatime,nodiratime,nosuid,nodev,discard,inline_xattr                   wait,check,notrim,forceencrypt=/metadata/key_file
++/dev/block/by-name/userdata       /data               ext4      noatime,nodiratime,nosuid,nodev,discard                   wait,check,notrim,encryptable=/metadata/key_file
++# /dev/block/by-name/userdata       /data               ext4      noatime,nodiratime,nosuid,nodev,discard,inline_xattr                   wait,check
+diff --git a/recovery.fstab b/recovery.fstab
+index 2a3b2a8..a6b882b 100644
+--- a/recovery.fstab
++++ b/recovery.fstab
+@@ -4,10 +4,10 @@
+ /dev/block/mmcblk0p1                                               /mnt/external_sd     vfat             /dev/block/mmcblk0                  defaults
+ /dev/block/by-name/system                /system              ext4             defaults                  defaults
+ /dev/block/by-name/vendor                /vendor              ext4             defaults                  defaults
+-/dev/block/by-name/oem                   /oem                 ext4             defaults                  defaults
++# /dev/block/by-name/oem                   /oem                 ext4             defaults                  defaults
+ /dev/block/by-name/cache                 /cache               ext4             defaults                  defaults
+ /dev/block/by-name/metadata              /metadata            ext4             defaults                  defaults
+-/dev/block/by-name/userdata              /data                f2fs             defaults                  defaults
++/dev/block/by-name/userdata              /data                ext4             defaults                  defaults
+ /dev/block/by-name/cust                  /cust                ext4             defaults                  defaults
+ /dev/block/by-name/custom                /custom              ext4             defaults                  defaults
+ /dev/block/by-name/radical_update        /radical_update      ext4             defaults                  defaults
+@@ -19,6 +19,6 @@
+ /dev/block/by-name/boot                  /boot                emmc             defaults                  defaults
+ /dev/block/by-name/recovery              /recovery            emmc             defaults                  defaults
+ /dev/block/by-name/backup                /backup              emmc             defaults                  defaults
+-/dev/block/by-name/frp                   /frp                 emmc             defaults                  defaults
++# /dev/block/by-name/frp                   /frp                 emmc             defaults                  defaults
+ /dev/block/by-name/trust                 /trust               emmc             defaults                  defaults
+ /dev/block/by-name/baseparamer           /baseparamer         emmc             defaults                  defaults
+diff --git a/rk3288.mk b/rk3288.mk
+index f6b4403..1da4c63 100644
+--- a/rk3288.mk
++++ b/rk3288.mk
+@@ -24,7 +24,7 @@ PRODUCT_CHARACTERISTICS := tablet
+ PRODUCT_NAME := rk3288
+ PRODUCT_DEVICE := rk3288
+ PRODUCT_BRAND := rockchip
+-PRODUCT_MODEL := rk3288
++PRODUCT_MODEL := RG_IVC107
+ PRODUCT_MANUFACTURER := rockchip
+ 
+ PRODUCT_PACKAGES += \

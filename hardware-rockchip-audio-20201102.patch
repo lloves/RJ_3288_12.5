@@ -1,0 +1,13 @@
+diff --git a/tinyalsa_hal/codec_config/es8316_config.h b/tinyalsa_hal/codec_config/es8316_config.h
+index 0694994..282833c 100644
+--- a/tinyalsa_hal/codec_config/es8316_config.h
++++ b/tinyalsa_hal/codec_config/es8316_config.h
+@@ -69,7 +69,7 @@ const struct config_control es8316_bluetooth_voip_controls[] = {
+ const struct config_control es8316_main_mic_capture_controls[] = {
+     {
+         .ctl_name = "Differential Mux",
+-        .int_val = {0},
++        .int_val = {1},
+     },
+ };
+ 
