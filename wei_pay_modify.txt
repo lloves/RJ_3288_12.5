@@ -9,27 +9,18 @@
     
     关键在：hardware/realtek/rtkbt/rtkbt.mk中并没有判断，所以rk编译脚本逻辑比较凌乱，这里需要控制下。
     补丁：
-    diff --git a/rtkbt/rtkbt.mk b/rtkbt/rtkbt.mk
-      index 41d258c..b9d9906 100644
-      --- a/rtkbt/rtkbt.mk
-      +++ b/rtkbt/rtkbt.mk
-      @@ -1,10 +1,12 @@
-       # RELEASE NAME: 20171107_BT_ANDROID_8.x
+   diff --git a/device.mk b/device.mk
+    index aba570d..11efc44 100755
+    --- a/device.mk
+    +++ b/device.mk
+    @@ -631,8 +631,8 @@ PRODUCT_PACKAGES += \
+         libbt-vendor-realtek \
+         bt_vendor.conf
 
-      -BOARD_HAVE_BLUETOOTH := true
-      +# BOARD_HAVE_BLUETOOTH := true
-       BOARD_HAVE_BLUETOOTH_RTK := true
-       BOARD_HAVE_BLUETOOTH_RTK_COEX := true
+    -include hardware/realtek/rtkbt/rtkbt.mk
+    -$(call inherit-product, hardware/realtek/rtkbt/rtkbt.mk)
+    +# include hardware/realtek/rtkbt/rtkbt.mk
+    +# $(call inherit-product, hardware/realtek/rtkbt/rtkbt.mk)
 
-
-      +ifeq ($(BOARD_HAVE_BLUETOOTH),true)
-      +
-       BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
-
-
-      @@ -87,4 +89,4 @@ PRODUCT_PROPERTY_OVERRIDES += \
-              persist.bluetooth.rtkcoex=true \
-              bluetooth.enable_timeout_ms=11000
-
-      -
-      +endif
+     ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)), box)
+         include device/rockchip/common/samba/rk31_samba.mk
